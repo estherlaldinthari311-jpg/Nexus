@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexus Earn | Firebase Pro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap');
+        :root { --primary: #8b5cf6; --secondary: #d946ef; }
+        body { font-family: 'Outfit', sans-serif; background: #060b18; color: white; min-height: 100vh; }
+        .glass { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; }
+        .btn-glow { background: linear-gradient(135deg, var(--primary), var(--secondary)); transition: 0.3s; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; animation: fadeInUp 0.4s ease; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .bottom-nav { background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(10px); border-top: 1px solid rgba(255,255,255,0.1); }
+        .notice-banner { background: linear-gradient(90deg, #b91c1c, #ef4444, #b91c1c); background-size: 200% 100%; animation: moveGradient 3s linear infinite; }
+        @keyframes moveGradient { 0% { background-position: 0% 0%; } 100% { background-position: 200% 0%; } }
+        .hidden { display: none; }
+    </style>
+</head>
+<body class="bg-[#060b18] pb-24">
+
+    <div id="auth-flow" class="min-h-screen flex items-center justify-center p-6">
+        <div id="auth-box" class="glass p-8 w-full max-w-sm">
+            <div class="text-center mb-8">
+                <h2 class="text-2xl font-black italic" id="auth-title">NEXUS LOGIN</h2>
+                <p class="text-slate-400 text-xs mt-1" id="auth-subtitle">Professional Earning Portal</p>
+            </div>
+            
+            <form id="auth-form" class="space-y-4">
+                <input type="email" id="email" required class="w-full bg-slate-800/50 border border-slate-700 rounded-xl px-4 py-3 outline-none" placeholder="Email Address">
+                <input type="password" id="password" required class="w-full bg-slate-800/50 border border-slate-700 rounded-xl px-4 py-3 outline-none" placeholder="Password">
+                <button type="submit" id="auth-btn" class="w-full btn-glow py-4 rounded-xl font-bold uppercase">Sign In</button>
+            </form>
+
+            <div class="mt-6 text-center">
+                <button onclick="toggleAuthMode()" id="toggle-text" class="text-xs text-indigo-400 font-bold underline">No account? Create one</button>
+            </div>
+        </div>
+
+        <div id="processing-box" class="glass p-10 text-center hidden w-full max-w-sm">
+            <div class="w-16 h-16 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+            <h3 class="text-xl font-bold mb-2">Syncing Wallet...</h3>
+            <div class="text-4xl font-black text-indigo-400" id="timer-digit">10</div>
+        </div>
+    </div>
+
+    <div id="main-app" class="hidden">
+        <div class="notice-banner w-full p-3 text-center shadow-lg font-bold text-[10px] md:text-xs">
+            ⚠️ NOTICE: Withdrawal available on April 10, 2026. Minimum ₹500.
+        </div>
+
+        <header class="p-6 flex justify-between items-center">
+            <div>
+                <h1 class="text-xl font-black italic">NEXUS</h1>
+                <p class="text-[9px] text-slate-500 uppercase font-bold" id="user-display">Loading...</p>
+            </div>
+            <button onclick="logout()" class="text-[10px] font-bold text-red-400 bg-red-500/10 px-3 py-1 rounded-lg">Logout</button>
+        </header>
+
+        <div class="px-6 mb-6">
+            <div class="glass p-6 border-l-4 border-indigo-500 flex justify-between items-center">
+                <div>
+                    <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Total Balance</p>
+                    <p class="text-4xl font-black">₹<span id="bal-text">0.00</span></p>
+                </div>
+                <i class="fas fa-wallet text-2xl text-indigo-400 opacity-50"></i>
+            </div>
+        </div>
+
+        <div id="tab-home" class="tab-content active px-6">
+            <div class="glass p-6 bg-gradient-to-br from-indigo-900/20 to-transparent mb-6 text-center">
+                <h3 class="font-black text-lg mb-1 uppercase italic text-indigo-400">Daily Claim</h3>
+                <p class="text-[10px] text-slate-400 mb-5">Click below to receive ₹10.00 daily reward.</p>
+                <button id="claim-btn" class="w-full py-4 btn-glow rounded-xl font-black text-xs uppercase tracking-widest">Claim Reward</button>
+            </div>
+            
+            <div class="grid grid-cols-2 gap-4">
+                <div class="glass p-4"><p class="text-[9px] text-slate-500 font-bold uppercase">Signup Bonus</p><p class="font-bold">₹50.00</p></div>
+                <div class="glass p-4"><p class="text-[9px] text-slate-500 font-bold uppercase">Referral Earn</p><p class="font-bold">₹<span id="ref-earn-text">0.00</span></p></div>
+            </div>
+        </div>
+
+        <div id="tab-refer" class="tab-content px-6">
+            <div class="text-center mb-6">
+                <h2 class="text-2xl font-black italic uppercase">Invite & Earn</h2>
+                <p class="text-xs text-slate-400">Get ₹50.00 for every successful referral.</p>
+            </div>
+            <div class="glass p-6 border-2 border-dashed border-indigo-500/30">
+                <p class="text-[10px] text-slate-500 font-bold mb-3 uppercase text-center">Your Unique Referral Link</p>
+                <div class="flex gap-2">
+                    <input type="text" readonly id="ref-link" class="flex-1 bg-black/40 border border-slate-700 p-3 rounded-lg text-[10px] text-indigo-300 outline-none font-mono">
+                    <button onclick="copyRef()" class="bg-indigo-500 px-4 rounded-lg text-xs font-bold"><i class="fas fa-copy"></i></button>
+                </div>
+            </div>
+        </div>
+
+        <div id="tab-withdraw" class="tab-content px-6">
+            <div class="relative glass p-10 text-center overflow-hidden h-40 flex flex-col items-center justify-center">
+                <div class="absolute inset-0 bg-black/80 backdrop-blur-sm z-10 flex flex-col items-center justify-center p-6">
+                    <i class="fas fa-lock text-2xl text-red-500 mb-2"></i>
+                    <p class="text-[10px] font-bold uppercase">UPI Gateway Closed</p>
+                    <p class="text-[8px] text-slate-500 mt-1 uppercase tracking-tighter">Will automatically unlock on April 10, 2026</p>
+                </div>
+            </div>
+        </div>
+
+        <nav class="bottom-nav fixed bottom-0 left-0 w-full h-20 flex items-center justify-around z-50">
+            <button onclick="switchTab('home', this)" class="nav-item active flex flex-col items-center gap-1 transition-all"><i class="fas fa-home text-xl"></i><span class="text-[9px] font-bold">HOME</span></button>
+            <button onclick="switchTab('refer', this)" class="nav-item flex flex-col items-center gap-1 text-slate-500 transition-all"><i class="fas fa-user-plus text-xl"></i><span class="text-[9px] font-bold">INVITE</span></button>
+            <button onclick="switchTab('withdraw', this)" class="nav-item flex flex-col items-center gap-1 text-slate-500 transition-all"><i class="fas fa-wallet text-xl"></i><span class="text-[9px] font-bold">PAYOUT</span></button>
+        </nav>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getDatabase, ref, set, get, update, onValue, runTransaction } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAazsOm5o_EE9H-etVMv2Qk3liDvd4sCd8",
+            authDomain: "nexus-e8124.firebaseapp.com",
+            databaseURL: "https://nexus-e8124-default-rtdb.firebaseio.com",
+            projectId: "nexus-e8124",
+            storageBucket: "nexus-e8124.firebasestorage.app",
+            messagingSenderId: "423242639393",
+            appId: "1:423242639393:web:15d569c83bbe7f16cf1b60"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getDatabase(app);
+
+        let isLoginMode = true;
+        let userData = null;
+
+        // Toggle Auth
+        window.toggleAuthMode = () => {
+            isLoginMode = !isLoginMode;
+            document.getElementById('auth-title').innerText = isLoginMode ? "NEXUS LOGIN" : "NEXUS SIGNUP";
+            document.getElementById('auth-btn').innerText = isLoginMode ? "Sign In" : "Sign Up";
+            document.getElementById('toggle-text').innerText = isLoginMode ? "No account? Create one" : "Already have an account? Login";
+        };
+
+        // REFERRAL LOGIC: URL atangin ref ID kan la ang
+        const urlParams = new URLSearchParams(window.location.search);
+        const referrerId = urlParams.get('ref');
+
+        // Auth Logic
+        document.getElementById('auth-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const pass = document.getElementById('password').value;
+
+            if(isLoginMode) {
+                signInWithEmailAndPassword(auth, email, pass).catch(err => alert("Login Failed: " + err.message));
+            } else {
+                createUserWithEmailAndPassword(auth, email, pass).then(async (cred) => {
+                    const newUserRef = ref(db, 'users/' + cred.user.uid);
+                    await set(newUserRef, {
+                        email: email,
+                        balance: 50.00, // Signup Bonus
+                        referralEarned: 0,
+                        signupDate: new Date().toISOString()
+                    });
+
+                    // Referral System: Invite-tu kha ₹50 pek tur
+                    if(referrerId && referrerId !== cred.user.uid) {
+                        const referrerBalanceRef = ref(db, `users/${referrerId}/balance`);
+                        const referrerEarnRef = ref(db, `users/${referrerId}/referralEarned`);
+                        
+                        // Referral logic using transaction for safety
+                        runTransaction(ref(db, `users/${referrerId}`), (user) => {
+                            if (user) {
+                                user.balance = (user.balance || 0) + 50;
+                                user.referralEarned = (user.referralEarned || 0) + 50;
+                            }
+                            return user;
+                        });
+                    }
+                }).catch(err => alert("Signup Failed: " + err.message));
+            }
+        });
+
+        // Track Auth State
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                document.getElementById('auth-box').classList.add('hidden');
+                document.getElementById('processing-box').classList.remove('hidden');
+                
+                onValue(ref(db, 'users/' + user.uid), (snapshot) => {
+                    const data = snapshot.val();
+                    if(data) {
+                        userData = data;
+                        document.getElementById('bal-text').innerText = data.balance.toFixed(2);
+                        document.getElementById('ref-earn-text').innerText = (data.referralEarned || 0).toFixed(2);
+                        document.getElementById('user-display').innerText = user.email;
+                    }
+                });
+
+                let t = 10;
+                const timer = setInterval(() => {
+                    t--;
+                    document.getElementById('timer-digit').innerText = t;
+                    if(t === 0) {
+                        clearInterval(timer);
+                        document.getElementById('auth-flow').classList.add('hidden');
+                        document.getElementById('main-app').classList.remove('hidden');
+                        // I-link tak tak tur chu i website domain i dah leh ang
+                        const siteUrl = window.location.origin + window.location.pathname;
+                        document.getElementById('ref-link').value = siteUrl + "?ref=" + user.uid;
+                    }
+                }, 1000);
+            } else {
+                document.getElementById('main-app').classList.add('hidden');
+                document.getElementById('auth-flow').classList.remove('hidden');
+                document.getElementById('auth-box').classList.remove('hidden');
+                document.getElementById('processing-box').classList.add('hidden');
+            }
+        });
+
+        // Daily Claim
+        document.getElementById('claim-btn').addEventListener('click', () => {
+            if(auth.currentUser && userData) {
+                update(ref(db, 'users/' + auth.currentUser.uid), {
+                    balance: userData.balance + 10
+                }).then(() => {
+                    alert("₹10.00 Claimed!");
+                    document.getElementById('claim-btn').disabled = true;
+                    document.getElementById('claim-btn').innerText = "CLAIMED TODAY";
+                });
+            }
+        });
+
+        window.logout = () => signOut(auth);
+    </script>
+
+    <script>
+        function switchTab(tabName, el) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.getElementById('tab-' + tabName).classList.add('active');
+            document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active', 'text-indigo-400'));
+            el.classList.add('active', 'text-indigo-400');
+        }
+        function copyRef() {
+            const copyText = document.getElementById("ref-link");
+            copyText.select();
+            navigator.clipboard.writeText(copyText.value);
+            alert("Referral link copied!");
+        }
+    </script>
+</body>
+  </html>
+          
