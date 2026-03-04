@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nexus Earn | Firebase Pro</title>
+    <title>Nexus Earn | Official</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
@@ -16,55 +16,39 @@
         .tab-content.active { display: block; animation: fadeInUp 0.4s ease; }
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         .bottom-nav { background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(10px); border-top: 1px solid rgba(255,255,255,0.1); }
-        .notice-banner { background: linear-gradient(90deg, #b91c1c, #ef4444, #b91c1c); background-size: 200% 100%; animation: moveGradient 3s linear infinite; }
-        @keyframes moveGradient { 0% { background-position: 0% 0%; } 100% { background-position: 200% 0%; } }
-        .hidden { display: none; }
     </style>
 </head>
 <body class="bg-[#060b18] pb-24">
 
     <div id="auth-flow" class="min-h-screen flex items-center justify-center p-6">
         <div id="auth-box" class="glass p-8 w-full max-w-sm">
-            <div class="text-center mb-8">
-                <h2 class="text-2xl font-black italic" id="auth-title">NEXUS LOGIN</h2>
-                <p class="text-slate-400 text-xs mt-1">Professional Earning Portal</p>
-            </div>
-            
+            <h2 class="text-2xl font-black italic text-center mb-8" id="auth-title">NEXUS LOGIN</h2>
             <form id="auth-form" class="space-y-4">
-                <input type="email" id="email" required class="w-full bg-slate-800/50 border border-slate-700 rounded-xl px-4 py-3 outline-none" placeholder="Email Address">
-                <input type="password" id="password" required class="w-full bg-slate-800/50 border border-slate-700 rounded-xl px-4 py-3 outline-none" placeholder="Password">
-                <button type="submit" id="auth-btn" class="w-full btn-glow py-4 rounded-xl font-bold uppercase">Sign In</button>
+                <input type="email" id="email" required class="w-full bg-slate-800/50 border border-slate-700 rounded-xl px-4 py-3 outline-none text-sm" placeholder="Email Address">
+                <input type="password" id="password" required class="w-full bg-slate-800/50 border border-slate-700 rounded-xl px-4 py-3 outline-none text-sm" placeholder="Password">
+                <button type="submit" id="auth-btn" class="w-full btn-glow py-4 rounded-xl font-bold uppercase text-xs">Sign In</button>
             </form>
-
             <div class="mt-6 text-center">
                 <button onclick="toggleAuthMode()" id="toggle-text" class="text-[10px] text-indigo-400 font-bold underline">Don't have an account? Sign Up</button>
             </div>
         </div>
-
-        <div id="processing-box" class="glass p-10 text-center hidden w-full max-w-sm">
+        <div id="processing-box" class="glass p-10 text-center hidden">
             <div class="w-16 h-16 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-            <h3 class="text-xl font-bold mb-2 tracking-tighter">Syncing Wallet...</h3>
+            <h3 class="text-xl font-bold mb-2">Syncing Wallet...</h3>
             <div class="text-4xl font-black text-indigo-400" id="timer-digit">10</div>
         </div>
     </div>
 
     <div id="main-app" class="hidden">
-        <div class="notice-banner w-full p-3 text-center shadow-lg font-bold text-[10px]">
-            ⚠️ WITHDRAWAL WILL OPEN ON APRIL 10, 2026
-        </div>
-
         <header class="p-6 flex justify-between items-center">
-            <div>
-                <h1 class="text-xl font-black italic">NEXUS</h1>
-                <p id="user-display" class="text-[9px] text-slate-500 font-bold uppercase"></p>
-            </div>
-            <button onclick="logout()" class="text-[10px] font-bold text-red-400 bg-red-500/10 px-3 py-1 rounded-lg">Logout</button>
+            <div><h1 class="text-xl font-black italic">NEXUS</h1><p id="user-display" class="text-[9px] text-slate-500 font-bold"></p></div>
+            <button onclick="logout()" class="text-[10px] font-bold text-red-400">Logout</button>
         </header>
 
         <div class="px-6 mb-6">
             <div class="glass p-6 border-l-4 border-indigo-500 flex justify-between items-center">
                 <div>
-                    <p class="text-[10px] text-slate-400 font-bold uppercase">Total Balance</p>
+                    <p class="text-[10px] text-slate-400 font-bold uppercase">Wallet Balance</p>
                     <p class="text-4xl font-black">₹<span id="bal-text">0.00</span></p>
                 </div>
                 <i class="fas fa-wallet text-2xl text-indigo-500 opacity-30"></i>
@@ -72,55 +56,62 @@
         </div>
 
         <div class="px-6 mb-6">
-            <div class="glass p-4 text-center border-dashed border-white/10">
-                <p class="text-[8px] text-slate-500 uppercase mb-2">Sponsored Ad</p>
-                <div id="ad-slot" class="bg-white/5 h-20 rounded-xl flex items-center justify-center text-[10px] italic text-slate-500">
-                    Your Ad Code Here (Adsterra/AdSense)
-                </div>
+            <div class="glass p-4 text-center border-dashed border-white/10 overflow-hidden min-h-[100px]">
+                <script async="async" data-cfasync="false" src="https://pl28842448.effectivegatecpm.com/910cbe7d7159b0ad3fc37cf03c0beaef/invoke.js"></script>
+                <div id="container-910cbe7d7159b0ad3fc37cf03c0beaef"></div>
             </div>
         </div>
 
-        <div id="tab-home" class="tab-content active px-6">
-            <div class="glass p-6 bg-gradient-to-br from-indigo-900/20 to-transparent mb-6 text-center">
-                <h3 class="font-black text-lg mb-1 italic text-indigo-400">DAILY REWARD</h3>
-                <p class="text-[10px] text-slate-400 mb-5">Claim ₹10.00 bonus every 24 hours.</p>
-                <button id="claim-btn" class="w-full py-4 btn-glow rounded-xl font-black text-xs uppercase">Claim Now</button>
+        <div id="tab-home" class="tab-content active px-6 space-y-4">
+            <div class="glass p-5 text-center">
+                <h3 class="font-black text-sm text-indigo-400 mb-1">DAILY REWARD</h3>
+                <p class="text-[9px] text-slate-400 mb-4">Claim ₹0.60 daily.</p>
+                <button id="claim-btn" class="w-full py-3 btn-glow rounded-xl font-black text-[10px] uppercase">Claim Reward</button>
+            </div>
+
+            <div class="glass p-5">
+                <h3 class="font-black text-sm text-indigo-400 mb-4 tracking-widest uppercase">Bonus Tasks</h3>
+                <div class="space-y-3">
+                    <a href="https://t.me/+_KUCpKf_ZdhmZDk1" target="_blank" onclick="completeTask('tg_task', 2.0)" class="flex items-center justify-between bg-blue-500/10 p-4 rounded-xl border border-blue-500/20">
+                        <div class="flex items-center gap-3"><i class="fab fa-telegram text-blue-400"></i><span class="text-[10px] font-bold">Join Telegram</span></div>
+                        <span class="text-blue-400 font-bold text-[10px]">₹2.00</span>
+                    </a>
+                    <a href="https://www.instagram.com/best_nexus?igsh=aHQwbGp6a2I4aWQy" target="_blank" onclick="completeTask('ig_task', 2.0)" class="flex items-center justify-between bg-pink-500/10 p-4 rounded-xl border border-pink-500/20">
+                        <div class="flex items-center gap-3"><i class="fab fa-instagram text-pink-400"></i><span class="text-[10px] font-bold">Follow Instagram</span></div>
+                        <span class="text-pink-400 font-bold text-[10px]">₹2.00</span>
+                    </a>
+                </div>
             </div>
         </div>
 
         <div id="tab-refer" class="tab-content px-6">
-            <div class="text-center mb-6">
-                <h2 class="text-2xl font-black italic uppercase">Invite & Earn</h2>
-                <p class="text-xs text-slate-400">Get ₹50 for every new user you invite.</p>
-            </div>
-            <div class="glass p-6 border-2 border-dashed border-indigo-500/30">
-                <p class="text-[10px] text-slate-500 font-bold mb-3 uppercase text-center">Your Referral Link</p>
-                <input type="text" readonly id="ref-link" class="w-full bg-black/40 border border-slate-700 p-3 rounded-lg text-[10px] text-indigo-300 outline-none font-mono mb-4">
-                <button onclick="copyRef()" class="w-full btn-glow py-3 rounded-lg text-xs font-bold uppercase">Copy Link</button>
+            <div class="glass p-6 text-center">
+                <h2 class="text-xl font-black italic mb-2">INVITE & EARN</h2>
+                <p class="text-[10px] text-slate-400 mb-6">Earn ₹5.00 for every successful referral.</p>
+                <input type="text" readonly id="ref-link" class="w-full bg-black/40 border border-slate-700 p-3 rounded-lg text-[9px] text-indigo-300 font-mono mb-4">
+                <button onclick="copyRef()" class="w-full btn-glow py-3 rounded-lg text-xs font-bold">COPY LINK</button>
             </div>
         </div>
 
         <div id="tab-withdraw" class="tab-content px-6">
-            <div class="relative glass p-10 text-center overflow-hidden h-40 flex flex-col items-center justify-center">
-                <div class="absolute inset-0 bg-black/90 backdrop-blur-sm z-10 flex flex-col items-center justify-center p-6">
-                    <i class="fas fa-lock text-2xl text-red-500 mb-2"></i>
-                    <p class="text-[10px] font-bold uppercase">UPI Gateway Locked</p>
-                    <p class="text-[8px] text-slate-500 mt-1 uppercase">Unlocks on April 10, 2026</p>
+            <div class="glass p-6">
+                <h2 class="text-lg font-black mb-1 uppercase">Withdraw</h2>
+                <p class="text-[9px] text-slate-500 mb-6">Min: ₹50 | Max: ₹150</p>
+                <div class="space-y-4">
+                    <input type="text" id="upi-id" class="w-full bg-slate-800/50 border border-slate-700 rounded-xl p-3 text-xs outline-none" placeholder="Enter UPI ID (e.g., name@okicici)">
+                    <input type="number" id="w-amount" class="w-full bg-slate-800/50 border border-slate-700 rounded-xl p-3 text-xs outline-none" placeholder="Amount (50-150)">
+                    <button onclick="requestWithdraw()" class="w-full btn-glow py-4 rounded-xl font-bold text-xs">REQUEST PAYOUT</button>
                 </div>
             </div>
         </div>
 
-        <div id="tab-admin" class="tab-content px-6">
-            <h2 class="text-xl font-black italic mb-4 uppercase">User Database</h2>
-            <div id="user-list" class="space-y-3 pb-10">
-                </div>
-        </div>
+        <div id="tab-admin" class="tab-content px-6"><div id="user-list" class="space-y-3"></div></div>
 
         <nav class="bottom-nav fixed bottom-0 left-0 w-full h-20 flex items-center justify-around z-50">
-            <button onclick="switchTab('home', this)" class="nav-item active flex flex-col items-center gap-1"><i class="fas fa-home text-xl"></i><span class="text-[9px] font-bold">HOME</span></button>
+            <button onclick="switchTab('home', this)" class="nav-item active flex flex-col items-center gap-1"><i class="fas fa-tasks text-xl"></i><span class="text-[9px] font-bold">TASKS</span></button>
             <button onclick="switchTab('refer', this)" class="nav-item flex flex-col items-center gap-1 text-slate-500"><i class="fas fa-user-plus text-xl"></i><span class="text-[9px] font-bold">INVITE</span></button>
-            <button onclick="switchTab('withdraw', this)" class="nav-item flex flex-col items-center gap-1 text-slate-500"><i class="fas fa-wallet text-xl"></i><span class="text-[9px] font-bold">PAYOUT</span></button>
-            <button id="admin-nav-btn" onclick="switchTab('admin', this)" class="hidden flex flex-col items-center gap-1 text-slate-500"><i class="fas fa-user-shield text-xl"></i><span class="text-[9px] font-bold">ADMIN</span></button>
+            <button onclick="switchTab('withdraw', this)" class="nav-item flex flex-col items-center gap-1 text-slate-500"><i class="fas fa-wallet text-xl"></i><span class="text-[9px] font-bold">WALLET</span></button>
+            <button id="admin-nav-btn" onclick="switchTab('admin', this)" class="hidden flex flex-col items-center gap-1 text-slate-500"><i class="fas fa-shield-alt text-xl"></i><span class="text-[9px] font-bold">ADMIN</span></button>
         </nav>
     </div>
 
@@ -129,7 +120,6 @@
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
         import { getDatabase, ref, set, get, update, onValue, runTransaction } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-        // I Firebase Config thar kha a ni e:
         const firebaseConfig = {
             apiKey: "AIzaSyAazsOm5o_EE9H-etVMv2Qk3liDvd4sCd8",
             authDomain: "nexus-e8124.firebaseapp.com",
@@ -144,24 +134,21 @@
         const auth = getAuth(app);
         const db = getDatabase(app);
 
-        // NANGMA EMAIL HETAH HIAN DAH RAWH (ADMIN TUR)
-        const ADMIN_EMAIL = "i_email_tak_tak@gmail.com"; 
+        const ADMIN_EMAIL = "dah_law_pawk_rawh@gmail.com"; 
 
         let isLoginMode = true;
         let userData = null;
 
-        // Toggle Auth
         window.toggleAuthMode = () => {
             isLoginMode = !isLoginMode;
             document.getElementById('auth-title').innerText = isLoginMode ? "NEXUS LOGIN" : "NEXUS SIGNUP";
             document.getElementById('auth-btn').innerText = isLoginMode ? "Sign In" : "Sign Up";
-            document.getElementById('toggle-text').innerText = isLoginMode ? "No account? Create one" : "Already have an account? Login";
+            document.getElementById('toggle-text').innerText = isLoginMode ? "Don't have an account? Sign Up" : "Already have an account? Login";
         };
 
         const urlParams = new URLSearchParams(window.location.search);
         const referrerId = urlParams.get('ref');
 
-        // Login/Signup Action
         document.getElementById('auth-form').addEventListener('submit', (e) => {
             e.preventDefault();
             const email = document.getElementById('email').value;
@@ -172,15 +159,11 @@
             } else {
                 createUserWithEmailAndPassword(auth, email, pass).then(async (cred) => {
                     await set(ref(db, 'users/' + cred.user.uid), {
-                        email: email,
-                        balance: 50.00,
-                        signupDate: new Date().toISOString()
+                        email: email, balance: 50.00, tasks: {}
                     });
                     if(referrerId && referrerId !== cred.user.uid) {
                         runTransaction(ref(db, `users/${referrerId}`), (post) => {
-                            if (post) {
-                                post.balance = (post.balance || 0) + 50;
-                            }
+                            if (post) post.balance = (post.balance || 0) + 5.00; // REFERRAL RATE ₹5
                             return post;
                         });
                     }
@@ -188,12 +171,10 @@
             }
         });
 
-        // Auth Listener
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 document.getElementById('auth-box').classList.add('hidden');
                 document.getElementById('processing-box').classList.remove('hidden');
-                
                 onValue(ref(db, 'users/' + user.uid), (snapshot) => {
                     const data = snapshot.val();
                     if(data) {
@@ -202,13 +183,10 @@
                         document.getElementById('user-display').innerText = user.email;
                     }
                 });
-
-                // Check for Admin
                 if(user.email === ADMIN_EMAIL) {
                     document.getElementById('admin-nav-btn').classList.remove('hidden');
                     loadAdminData();
                 }
-
                 let t = 10;
                 const timer = setInterval(() => {
                     t--;
@@ -223,22 +201,46 @@
             } else {
                 document.getElementById('main-app').classList.add('hidden');
                 document.getElementById('auth-flow').classList.remove('hidden');
-                document.getElementById('auth-box').classList.remove('hidden');
-                document.getElementById('processing-box').classList.add('hidden');
             }
         });
 
-        // Daily Claim
+        // Claim Reward: ₹0.60
         document.getElementById('claim-btn').addEventListener('click', () => {
             if(auth.currentUser && userData) {
                 update(ref(db, 'users/' + auth.currentUser.uid), {
-                    balance: userData.balance + 10
-                }).then(() => {
-                    alert("₹10.00 Claimed!");
-                    document.getElementById('claim-btn').disabled = true;
-                });
+                    balance: userData.balance + 0.60
+                }).then(() => { alert("₹0.60 Claimed!"); document.getElementById('claim-btn').disabled = true; });
             }
         });
+
+        // Social Task Function
+        window.completeTask = (taskName, reward) => {
+            if(auth.currentUser && userData) {
+                if(userData.tasks && userData.tasks[taskName]) {
+                    alert("Already completed!");
+                    return;
+                }
+                update(ref(db, 'users/' + auth.currentUser.uid), {
+                    balance: userData.balance + reward,
+                    [`tasks/${taskName}`]: true
+                }).then(() => alert(`₹${reward} added for task!`));
+            }
+        };
+
+        // Withdrawal Logic
+        window.requestWithdraw = () => {
+            const upi = document.getElementById('upi-id').value;
+            const amt = parseFloat(document.getElementById('w-amount').value);
+            if(amt < 50 || amt > 150) { alert("Amount must be between 50 and 150"); return; }
+            if(userData.balance < amt) { alert("Insufficient balance"); return; }
+            
+            const wRef = ref(db, 'withdrawals/' + Date.now());
+            set(wRef, { email: auth.currentUser.email, upi: upi, amount: amt, status: 'pending' })
+            .then(() => {
+                update(ref(db, 'users/' + auth.currentUser.uid), { balance: userData.balance - amt });
+                alert("Withdrawal request sent!");
+            });
+        };
 
         function loadAdminData() {
             onValue(ref(db, 'users'), (snapshot) => {
@@ -246,19 +248,12 @@
                 const list = document.getElementById('user-list');
                 list.innerHTML = "";
                 for(let id in users) {
-                    list.innerHTML += `
-                        <div class="glass p-4 border-l-2 border-indigo-500">
-                            <p class="text-[10px] font-bold">${users[id].email}</p>
-                            <p class="text-[10px] text-slate-400">Balance: ₹${users[id].balance}</p>
-                        </div>
-                    `;
+                    list.innerHTML += `<div class="glass p-3 text-[10px] border-l-2 border-indigo-500">${users[id].email} - ₹${users[id].balance.toFixed(2)}</div>`;
                 }
             });
         }
-
         window.logout = () => signOut(auth);
     </script>
-
     <script>
         function switchTab(tabName, el) {
             document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
@@ -270,9 +265,9 @@
             const copyText = document.getElementById("ref-link");
             copyText.select();
             navigator.clipboard.writeText(copyText.value);
-            alert("Referral link copied!");
+            alert("Link Copied!");
         }
     </script>
 </body>
                     </html>
-    
+                    
