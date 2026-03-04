@@ -2,116 +2,186 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nexus Earn | Official</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Nexus Platinum | Earning Revolution</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap');
-        :root { --primary: #8b5cf6; --secondary: #d946ef; }
-        body { font-family: 'Outfit', sans-serif; background: #060b18; color: white; min-height: 100vh; }
-        .glass { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; }
-        .btn-glow { background: linear-gradient(135deg, var(--primary), var(--secondary)); transition: 0.3s; }
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap');
+        :root { --primary: #6366f1; --accent: #a855f7; --bg: #030712; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--bg); color: #f8fafc; overflow-x: hidden; }
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 24px; }
+        .neo-gradient { background: linear-gradient(135deg, var(--primary), var(--accent)); }
         .tab-content { display: none; }
-        .tab-content.active { display: block; animation: fadeInUp 0.4s ease; }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .bottom-nav { background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(10px); border-top: 1px solid rgba(255,255,255,0.1); }
+        .tab-content.active { display: block; animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .nav-active { color: var(--primary); transform: translateY(-5px); transition: 0.3s; }
+        .shimmer { background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.05) 50%, rgba(255,255,255,0) 100%); background-size: 200% 100%; animation: shimmer 2s infinite; }
+        @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+        input:focus { border-color: var(--primary); box-shadow: 0 0 15px rgba(99, 102, 241, 0.2); }
     </style>
 </head>
-<body class="bg-[#060b18] pb-24">
+<body class="pb-28">
 
-    <div id="auth-flow" class="min-h-screen flex items-center justify-center p-6">
-        <div id="auth-box" class="glass p-8 w-full max-w-sm">
-            <h2 class="text-2xl font-black italic text-center mb-8" id="auth-title">NEXUS LOGIN</h2>
-            <form id="auth-form" class="space-y-4">
-                <input type="email" id="email" required class="w-full bg-slate-800/50 border border-slate-700 rounded-xl px-4 py-3 outline-none text-sm" placeholder="Email Address">
-                <input type="password" id="password" required class="w-full bg-slate-800/50 border border-slate-700 rounded-xl px-4 py-3 outline-none text-sm" placeholder="Password">
-                <button type="submit" id="auth-btn" class="w-full btn-glow py-4 rounded-xl font-bold uppercase text-xs">Sign In</button>
-            </form>
-            <div class="mt-6 text-center">
-                <button onclick="toggleAuthMode()" id="toggle-text" class="text-[10px] text-indigo-400 font-bold underline">Don't have an account? Sign Up</button>
+    <div id="auth-flow" class="min-h-screen flex items-center justify-center p-6 animate__animated animate__fadeIn">
+        <div id="auth-box" class="glass p-8 w-full max-w-sm relative overflow-hidden">
+            <div class="absolute -top-10 -right-10 w-32 h-32 neo-gradient blur-3xl opacity-20"></div>
+            <div class="text-center mb-10">
+                <h1 class="text-3xl font-extrabold tracking-tighter italic text-white">NEXUS<span class="text-indigo-500">.</span></h1>
+                <p class="text-slate-500 text-[10px] font-bold uppercase tracking-widest mt-2">Next Gen Earnings</p>
             </div>
+            <form id="auth-form" class="space-y-4">
+                <div class="relative">
+                    <i class="fas fa-envelope absolute left-4 top-4 text-slate-500 text-xs"></i>
+                    <input type="email" id="email" required class="w-full bg-white/5 border border-white/10 rounded-2xl pl-12 pr-4 py-4 text-sm outline-none transition-all" placeholder="Email Address">
+                </div>
+                <div class="relative">
+                    <i class="fas fa-lock absolute left-4 top-4 text-slate-500 text-xs"></i>
+                    <input type="password" id="password" required class="w-full bg-white/5 border border-white/10 rounded-2xl pl-12 pr-4 py-4 text-sm outline-none transition-all" placeholder="Password">
+                </div>
+                <button type="submit" id="auth-btn" class="w-full neo-gradient py-4 rounded-2xl font-bold text-sm shadow-lg shadow-indigo-500/20 active:scale-95 transition-transform uppercase">Sign In</button>
+            </form>
+            <button onclick="toggleAuthMode()" id="toggle-text" class="w-full text-center mt-6 text-[10px] text-slate-400 font-semibold hover:text-white transition-colors uppercase tracking-widest">New member? Create Account</button>
         </div>
-        <div id="processing-box" class="glass p-10 text-center hidden">
-            <div class="w-16 h-16 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-            <h3 class="text-xl font-bold mb-2">Syncing Wallet...</h3>
-            <div class="text-4xl font-black text-indigo-400" id="timer-digit">10</div>
+        
+        <div id="processing-box" class="hidden text-center">
+            <div class="relative w-24 h-24 mx-auto mb-6">
+                <div class="absolute inset-0 rounded-full border-4 border-indigo-500/20"></div>
+                <div class="absolute inset-0 rounded-full border-4 border-t-indigo-500 animate-spin"></div>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-1">Authorizing...</h3>
+            <p class="text-slate-500 text-xs uppercase tracking-widest">Connecting to Nexus Nodes</p>
         </div>
     </div>
 
-    <div id="main-app" class="hidden">
+    <div id="main-app" class="hidden animate__animated animate__fadeIn">
         <header class="p-6 flex justify-between items-center">
-            <div><h1 class="text-xl font-black italic">NEXUS</h1><p id="user-display" class="text-[9px] text-slate-500 font-bold"></p></div>
-            <button onclick="logout()" class="text-[10px] font-bold text-red-400">Logout</button>
+            <h2 class="text-xl font-black tracking-tighter italic">NEXUS<span class="text-indigo-500">.</span></h2>
+            <div class="flex items-center gap-3">
+                <div id="admin-badge" class="hidden bg-indigo-500/20 text-indigo-400 text-[8px] font-black px-2 py-1 rounded-full border border-indigo-500/30">ADMIN</div>
+                <button onclick="logout()" class="w-10 h-10 glass flex items-center justify-center text-red-400"><i class="fas fa-power-off text-sm"></i></button>
+            </div>
         </header>
 
-        <div class="px-6 mb-6">
-            <div class="glass p-6 border-l-4 border-indigo-500 flex justify-between items-center">
-                <div>
-                    <p class="text-[10px] text-slate-400 font-bold uppercase">Wallet Balance</p>
-                    <p class="text-4xl font-black">₹<span id="bal-text">0.00</span></p>
+        <div class="px-6 mb-8">
+            <div class="glass p-8 relative overflow-hidden group">
+                <div class="absolute top-0 right-0 w-32 h-32 neo-gradient blur-3xl opacity-10 group-hover:opacity-30 transition-opacity"></div>
+                <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2">Available Balance</p>
+                <div class="flex items-baseline gap-2">
+                    <span class="text-4xl font-black italic">₹<span id="bal-text">0.00</span></span>
+                    <span class="text-green-500 text-[10px] font-bold">+0.60 daily</span>
                 </div>
-                <i class="fas fa-wallet text-2xl text-indigo-500 opacity-30"></i>
+                <div class="mt-6 flex gap-4">
+                    <div class="text-center bg-white/5 rounded-xl px-4 py-2 border border-white/5">
+                        <p class="text-[8px] text-slate-500 uppercase">Invites</p>
+                        <p id="ref-count" class="text-sm font-bold">0</p>
+                    </div>
+                    <div class="text-center bg-white/5 rounded-xl px-4 py-2 border border-white/5">
+                        <p class="text-[8px] text-slate-500 uppercase">Tier</p>
+                        <p class="text-sm font-bold text-indigo-400 italic font-black">PRO</p>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div class="px-6 mb-6">
-            <div class="glass p-4 text-center border-dashed border-white/10 overflow-hidden min-h-[100px]">
+        <div class="px-6 mb-8">
+            <div class="glass p-4 min-h-[100px] flex items-center justify-center border-dashed border-white/10">
                 <script async="async" data-cfasync="false" src="https://pl28842448.effectivegatecpm.com/910cbe7d7159b0ad3fc37cf03c0beaef/invoke.js"></script>
                 <div id="container-910cbe7d7159b0ad3fc37cf03c0beaef"></div>
             </div>
         </div>
 
-        <div id="tab-home" class="tab-content active px-6 space-y-4">
-            <div class="glass p-5 text-center">
-                <h3 class="font-black text-sm text-indigo-400 mb-1">DAILY REWARD</h3>
-                <p class="text-[9px] text-slate-400 mb-4">Claim ₹0.60 daily.</p>
-                <button id="claim-btn" class="w-full py-3 btn-glow rounded-xl font-black text-[10px] uppercase">Claim Reward</button>
+        <div id="tab-home" class="tab-content active px-6 space-y-6">
+            <div class="glass p-6 text-center bg-indigo-500/5 border-indigo-500/10">
+                <h3 class="text-sm font-black text-indigo-300 uppercase tracking-widest mb-4">Daily Check-in</h3>
+                <button id="claim-btn" class="w-full py-4 neo-gradient rounded-2xl font-black text-xs shadow-xl active:scale-95 transition-all">CLAIM ₹0.60</button>
             </div>
 
-            <div class="glass p-5">
-                <h3 class="font-black text-sm text-indigo-400 mb-4 tracking-widest uppercase">Bonus Tasks</h3>
+            <div class="space-y-3">
+                <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest ml-2">Premium Tasks</p>
+                <a href="https://t.me/+_KUCpKf_ZdhmZDk1" target="_blank" onclick="completeTask('tg_task', 2.0)" class="glass p-5 flex items-center justify-between hover:bg-white/5 transition-colors">
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400"><i class="fab fa-telegram-plane"></i></div>
+                        <div><p class="text-xs font-bold">Nexus Telegram</p><p class="text-[9px] text-slate-500">Join official community</p></div>
+                    </div>
+                    <span class="text-xs font-black text-indigo-400">+₹2.00</span>
+                </a>
+                <a href="https://www.instagram.com/best_nexus?igsh=aHQwbGp6a2I4aWQy" target="_blank" onclick="completeTask('ig_task', 2.0)" class="glass p-5 flex items-center justify-between hover:bg-white/5 transition-colors">
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 rounded-full bg-pink-500/20 flex items-center justify-center text-pink-400"><i class="fab fa-instagram"></i></div>
+                        <div><p class="text-xs font-bold">Nexus Instagram</p><p class="text-[9px] text-slate-500">Follow for updates</p></div>
+                    </div>
+                    <span class="text-xs font-black text-indigo-400">+₹2.00</span>
+                </a>
+            </div>
+        </div>
+
+        <div id="tab-refer" class="tab-content px-6 text-center">
+            <div class="glass p-8 space-y-6">
+                <div class="w-20 h-20 bg-indigo-500/10 rounded-full flex items-center justify-center mx-auto border border-indigo-500/20">
+                    <i class="fas fa-users text-2xl text-indigo-400"></i>
+                </div>
+                <h2 class="text-2xl font-black italic">INVITE FRIENDS</h2>
+                <p class="text-xs text-slate-500 px-4 leading-relaxed">Referral system active. Earn ₹5.00 for every valid signup through your link.</p>
+                <div class="relative bg-black/40 p-4 rounded-2xl border border-white/5">
+                    <input type="text" readonly id="ref-link" class="w-full bg-transparent text-[10px] font-mono text-indigo-300 outline-none text-center pr-10" value="Loading...">
+                    <button onclick="copyRef()" class="absolute right-4 top-4 text-slate-500 hover:text-white"><i class="fas fa-copy"></i></button>
+                </div>
+                <button onclick="copyRef()" class="w-full py-4 neo-gradient rounded-2xl font-black text-xs shadow-xl uppercase">Share Link</button>
+            </div>
+        </div>
+
+        <div id="tab-withdraw" class="tab-content px-6 space-y-6">
+            <div id="withdraw-locked" class="glass p-10 text-center space-y-4">
+                <div class="w-16 h-16 bg-red-500/10 rounded-full flex items-center justify-center mx-auto border border-red-500/20">
+                    <i class="fas fa-lock text-red-500"></i>
+                </div>
+                <h3 class="text-lg font-black italic uppercase">System Locked</h3>
+                <p class="text-[10px] text-slate-500 uppercase tracking-widest">Requirement: <span id="lock-invite-count" class="text-red-400">0</span>/5 Invites</p>
+                <p class="text-[9px] text-slate-600 leading-relaxed italic">Mi 5 i invite hma chu i withdraw thei lo ang. Refer hmasa rawh.</p>
+            </div>
+
+            <div id="withdraw-unlocked" class="hidden space-y-6">
+                <div class="glass p-8">
+                    <h3 class="text-lg font-black italic mb-4">REQUEST PAYOUT</h3>
+                    <div class="space-y-4">
+                        <input type="text" id="upi-id" class="w-full bg-white/5 border border-white/10 rounded-2xl p-4 text-sm outline-none" placeholder="Your UPI ID (name@okicici)">
+                        <input type="number" id="w-amount" class="w-full bg-white/5 border border-white/10 rounded-2xl p-4 text-sm outline-none" placeholder="Amount (₹50 - ₹150)">
+                        <div class="bg-indigo-500/10 p-4 rounded-xl border border-indigo-500/20 text-center">
+                            <p class="text-[10px] font-bold text-indigo-400 uppercase tracking-tighter">Next Window Opens: April 5, 2026</p>
+                        </div>
+                        <button onclick="requestWithdraw()" id="w-btn" class="w-full py-4 bg-slate-800 text-slate-500 rounded-2xl font-black text-xs uppercase cursor-not-allowed">Locked Until April 5</button>
+                    </div>
+                </div>
+
                 <div class="space-y-3">
-                    <a href="https://t.me/+_KUCpKf_ZdhmZDk1" target="_blank" onclick="completeTask('tg_task', 2.0)" class="flex items-center justify-between bg-blue-500/10 p-4 rounded-xl border border-blue-500/20">
-                        <div class="flex items-center gap-3"><i class="fab fa-telegram text-blue-400"></i><span class="text-[10px] font-bold">Join Telegram</span></div>
-                        <span class="text-blue-400 font-bold text-[10px]">₹2.00</span>
-                    </a>
-                    <a href="https://www.instagram.com/best_nexus?igsh=aHQwbGp6a2I4aWQy" target="_blank" onclick="completeTask('ig_task', 2.0)" class="flex items-center justify-between bg-pink-500/10 p-4 rounded-xl border border-pink-500/20">
-                        <div class="flex items-center gap-3"><i class="fab fa-instagram text-pink-400"></i><span class="text-[10px] font-bold">Follow Instagram</span></div>
-                        <span class="text-pink-400 font-bold text-[10px]">₹2.00</span>
-                    </a>
+                    <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest ml-2 italic">Payout History</p>
+                    <div id="withdraw-history" class="space-y-2">
+                        <p class="text-[9px] text-center text-slate-600 italic">No transactions found</p>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div id="tab-refer" class="tab-content px-6">
-            <div class="glass p-6 text-center">
-                <h2 class="text-xl font-black italic mb-2">INVITE & EARN</h2>
-                <p class="text-[10px] text-slate-400 mb-6">Earn ₹5.00 for every successful referral.</p>
-                <input type="text" readonly id="ref-link" class="w-full bg-black/40 border border-slate-700 p-3 rounded-lg text-[9px] text-indigo-300 font-mono mb-4">
-                <button onclick="copyRef()" class="w-full btn-glow py-3 rounded-lg text-xs font-bold">COPY LINK</button>
-            </div>
+        <div id="tab-admin" class="tab-content px-6 space-y-4">
+            <h2 class="text-xl font-black italic uppercase mb-6 tracking-widest">Master Control</h2>
+            <div id="user-list" class="space-y-2"></div>
         </div>
 
-        <div id="tab-withdraw" class="tab-content px-6">
-            <div class="glass p-6">
-                <h2 class="text-lg font-black mb-1 uppercase">Withdraw</h2>
-                <p class="text-[9px] text-slate-500 mb-6">Min: ₹50 | Max: ₹150</p>
-                <div class="space-y-4">
-                    <input type="text" id="upi-id" class="w-full bg-slate-800/50 border border-slate-700 rounded-xl p-3 text-xs outline-none" placeholder="Enter UPI ID (e.g., name@okicici)">
-                    <input type="number" id="w-amount" class="w-full bg-slate-800/50 border border-slate-700 rounded-xl p-3 text-xs outline-none" placeholder="Amount (50-150)">
-                    <button onclick="requestWithdraw()" class="w-full btn-glow py-4 rounded-xl font-bold text-xs">REQUEST PAYOUT</button>
-                </div>
-            </div>
-        </div>
-
-        <div id="tab-admin" class="tab-content px-6"><div id="user-list" class="space-y-3"></div></div>
-
-        <nav class="bottom-nav fixed bottom-0 left-0 w-full h-20 flex items-center justify-around z-50">
-            <button onclick="switchTab('home', this)" class="nav-item active flex flex-col items-center gap-1"><i class="fas fa-tasks text-xl"></i><span class="text-[9px] font-bold">TASKS</span></button>
-            <button onclick="switchTab('refer', this)" class="nav-item flex flex-col items-center gap-1 text-slate-500"><i class="fas fa-user-plus text-xl"></i><span class="text-[9px] font-bold">INVITE</span></button>
-            <button onclick="switchTab('withdraw', this)" class="nav-item flex flex-col items-center gap-1 text-slate-500"><i class="fas fa-wallet text-xl"></i><span class="text-[9px] font-bold">WALLET</span></button>
-            <button id="admin-nav-btn" onclick="switchTab('admin', this)" class="hidden flex flex-col items-center gap-1 text-slate-500"><i class="fas fa-shield-alt text-xl"></i><span class="text-[9px] font-bold">ADMIN</span></button>
+        <nav class="fixed bottom-6 left-6 right-6 h-20 glass flex items-center justify-around z-50 px-2 shadow-2xl">
+            <button onclick="switchTab('home', this)" class="nav-item nav-active flex flex-col items-center gap-1">
+                <i class="fas fa-bolt text-lg"></i><span class="text-[8px] font-black uppercase tracking-tighter">Tasks</span>
+            </button>
+            <button onclick="switchTab('refer', this)" class="nav-item text-slate-500 flex flex-col items-center gap-1 transition-all">
+                <i class="fas fa-users-viewfinder text-lg"></i><span class="text-[8px] font-black uppercase tracking-tighter">Invite</span>
+            </button>
+            <button onclick="switchTab('withdraw', this)" class="nav-item text-slate-500 flex flex-col items-center gap-1 transition-all">
+                <i class="fas fa-wallet text-lg"></i><span class="text-[8px] font-black uppercase tracking-tighter">Wallet</span>
+            </button>
+            <button id="admin-nav-btn" onclick="switchTab('admin', this)" class="hidden text-slate-500 flex flex-col items-center gap-1 transition-all">
+                <i class="fas fa-crown text-lg"></i><span class="text-[8px] font-black uppercase tracking-tighter">Admin</span>
+            </button>
         </nav>
     </div>
 
@@ -134,6 +204,7 @@
         const auth = getAuth(app);
         const db = getDatabase(app);
 
+        // I EMAIL DAH RAWH
         const ADMIN_EMAIL = "dah_law_pawk_rawh@gmail.com"; 
 
         let isLoginMode = true;
@@ -143,27 +214,30 @@
             isLoginMode = !isLoginMode;
             document.getElementById('auth-title').innerText = isLoginMode ? "NEXUS LOGIN" : "NEXUS SIGNUP";
             document.getElementById('auth-btn').innerText = isLoginMode ? "Sign In" : "Sign Up";
-            document.getElementById('toggle-text').innerText = isLoginMode ? "Don't have an account? Sign Up" : "Already have an account? Login";
+            document.getElementById('toggle-text').innerText = isLoginMode ? "New member? Create Account" : "Back to Login";
         };
 
-        const urlParams = new URLSearchParams(window.location.search);
-        const referrerId = urlParams.get('ref');
-
+        // Auth Form Logic
         document.getElementById('auth-form').addEventListener('submit', (e) => {
             e.preventDefault();
             const email = document.getElementById('email').value;
             const pass = document.getElementById('password').value;
+            const urlParams = new URLSearchParams(window.location.search);
+            const rid = urlParams.get('ref');
 
             if(isLoginMode) {
                 signInWithEmailAndPassword(auth, email, pass).catch(err => alert(err.message));
             } else {
                 createUserWithEmailAndPassword(auth, email, pass).then(async (cred) => {
                     await set(ref(db, 'users/' + cred.user.uid), {
-                        email: email, balance: 50.00, tasks: {}
+                        email: email, balance: 50.00, refCount: 0, tasks: {}, signupDate: new Date().toISOString()
                     });
-                    if(referrerId && referrerId !== cred.user.uid) {
-                        runTransaction(ref(db, `users/${referrerId}`), (post) => {
-                            if (post) post.balance = (post.balance || 0) + 5.00; // REFERRAL RATE ₹5
+                    if(rid && rid !== cred.user.uid) {
+                        runTransaction(ref(db, `users/${rid}`), (post) => {
+                            if (post) {
+                                post.balance = (post.balance || 0) + 5.00;
+                                post.refCount = (post.refCount || 0) + 1;
+                            }
                             return post;
                         });
                     }
@@ -175,99 +249,68 @@
             if (user) {
                 document.getElementById('auth-box').classList.add('hidden');
                 document.getElementById('processing-box').classList.remove('hidden');
+                
                 onValue(ref(db, 'users/' + user.uid), (snapshot) => {
-                    const data = snapshot.val();
-                    if(data) {
-                        userData = data;
-                        document.getElementById('bal-text').innerText = data.balance.toFixed(2);
-                        document.getElementById('user-display').innerText = user.email;
+                    userData = snapshot.val();
+                    if(userData) {
+                        updateUI();
+                        loadHistory();
                     }
                 });
+
                 if(user.email === ADMIN_EMAIL) {
                     document.getElementById('admin-nav-btn').classList.remove('hidden');
-                    loadAdminData();
+                    document.getElementById('admin-badge').classList.remove('hidden');
+                    loadAdminPanel();
                 }
-                let t = 10;
-                const timer = setInterval(() => {
-                    t--;
-                    document.getElementById('timer-digit').innerText = t;
-                    if(t === 0) {
-                        clearInterval(timer);
-                        document.getElementById('auth-flow').classList.add('hidden');
-                        document.getElementById('main-app').classList.remove('hidden');
-                        document.getElementById('ref-link').value = window.location.origin + window.location.pathname + "?ref=" + user.uid;
-                    }
-                }, 1000);
+
+                setTimeout(() => {
+                    document.getElementById('auth-flow').classList.add('hidden');
+                    document.getElementById('main-app').classList.remove('hidden');
+                    document.getElementById('ref-link').value = window.location.origin + window.location.pathname + "?ref=" + user.uid;
+                }, 2000);
             } else {
                 document.getElementById('main-app').classList.add('hidden');
                 document.getElementById('auth-flow').classList.remove('hidden');
             }
         });
 
-        // Claim Reward: ₹0.60
-        document.getElementById('claim-btn').addEventListener('click', () => {
-            if(auth.currentUser && userData) {
-                update(ref(db, 'users/' + auth.currentUser.uid), {
-                    balance: userData.balance + 0.60
-                }).then(() => { alert("₹0.60 Claimed!"); document.getElementById('claim-btn').disabled = true; });
+        function updateUI() {
+            document.getElementById('bal-text').innerText = userData.balance.toFixed(2);
+            document.getElementById('ref-count').innerText = userData.refCount || 0;
+            document.getElementById('lock-invite-count').innerText = userData.refCount || 0;
+
+            const inviteMet = (userData.refCount >= 5);
+            if(inviteMet) {
+                document.getElementById('withdraw-locked').classList.add('hidden');
+                document.getElementById('withdraw-unlocked').classList.remove('hidden');
             }
+
+            // April 5, 2026 Check
+            const now = new Date();
+            const targetDate = new Date('2026-04-05');
+            if(now >= targetDate && inviteMet) {
+                const btn = document.getElementById('w-btn');
+                btn.innerText = "REQUEST PAYOUT";
+                btn.classList.replace('bg-slate-800', 'neo-gradient');
+                btn.classList.replace('text-slate-500', 'text-white');
+                btn.classList.remove('cursor-not-allowed');
+            }
+        }
+
+        window.completeTask = (taskName, reward) => {
+            if(userData.tasks && userData.tasks[taskName]) return alert("Already Earned!");
+            update(ref(db, 'users/' + auth.currentUser.uid), {
+                balance: userData.balance + reward,
+                [`tasks/${taskName}`]: true
+            }).then(() => alert(`₹${reward} Added!`));
+        };
+
+        document.getElementById('claim-btn').addEventListener('click', () => {
+            update(ref(db, 'users/' + auth.currentUser.uid), {
+                balance: userData.balance + 0.60
+            }).then(() => alert("₹0.60 Received!"));
         });
 
-        // Social Task Function
-        window.completeTask = (taskName, reward) => {
-            if(auth.currentUser && userData) {
-                if(userData.tasks && userData.tasks[taskName]) {
-                    alert("Already completed!");
-                    return;
-                }
-                update(ref(db, 'users/' + auth.currentUser.uid), {
-                    balance: userData.balance + reward,
-                    [`tasks/${taskName}`]: true
-                }).then(() => alert(`₹${reward} added for task!`));
-            }
-        };
-
-        // Withdrawal Logic
         window.requestWithdraw = () => {
-            const upi = document.getElementById('upi-id').value;
-            const amt = parseFloat(document.getElementById('w-amount').value);
-            if(amt < 50 || amt > 150) { alert("Amount must be between 50 and 150"); return; }
-            if(userData.balance < amt) { alert("Insufficient balance"); return; }
-            
-            const wRef = ref(db, 'withdrawals/' + Date.now());
-            set(wRef, { email: auth.currentUser.email, upi: upi, amount: amt, status: 'pending' })
-            .then(() => {
-                update(ref(db, 'users/' + auth.currentUser.uid), { balance: userData.balance - amt });
-                alert("Withdrawal request sent!");
-            });
-        };
-
-        function loadAdminData() {
-            onValue(ref(db, 'users'), (snapshot) => {
-                const users = snapshot.val();
-                const list = document.getElementById('user-list');
-                list.innerHTML = "";
-                for(let id in users) {
-                    list.innerHTML += `<div class="glass p-3 text-[10px] border-l-2 border-indigo-500">${users[id].email} - ₹${users[id].balance.toFixed(2)}</div>`;
-                }
-            });
-        }
-        window.logout = () => signOut(auth);
-    </script>
-    <script>
-        function switchTab(tabName, el) {
-            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-            document.getElementById('tab-' + tabName).classList.add('active');
-            document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active', 'text-indigo-400'));
-            el.classList.add('active', 'text-indigo-400');
-        }
-        function copyRef() {
-            const copyText = document.getElementById("ref-link");
-            copyText.select();
-            navigator.clipboard.writeText(copyText.value);
-            alert("Link Copied!");
-        }
-    </script>
-</body>
-                    </html>
-                    
+            const upi = document.getElementB
